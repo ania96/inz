@@ -48,7 +48,9 @@ public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+//nasluchuje na zmiane pozycji
+        LocationListener
+{
 
 
     private GoogleMap mMap;
@@ -64,7 +66,7 @@ public class MapsActivity extends FragmentActivity implements
     //wywołuje mapke na poczatku
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Mapa jest gotowa", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Mapa jest gotowa", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Mapa jest gotowa");
         mMap = googleMap;
 
@@ -87,14 +89,6 @@ public class MapsActivity extends FragmentActivity implements
             init();
         }
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            checkUserLocationPermission();
-//        }
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
     }
 
     public void init() {
@@ -121,10 +115,13 @@ public class MapsActivity extends FragmentActivity implements
 
 
     public void getLocationPermission() {
-        Log.d(TAG, "checkUserLocationPermission: pozwolenie na lokalizację");
+       // Toast.makeText(this, "checkUserLocationPermission: pozwolenie na lokalizację", Toast.LENGTH_SHORT).show();
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        //jak zrobilam == to pstryczek lokalizacyjny zniknal
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "nie wiem co sie dzieje", Toast.LENGTH_SHORT).show();
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true;
                 Toast.makeText(this, "nie wiem co sie dzieje", Toast.LENGTH_SHORT).show();
@@ -134,6 +131,7 @@ public class MapsActivity extends FragmentActivity implements
                         Request_User_Location_Code);
             }
         } else {
+            Toast.makeText(this, "brak? pozwolenie na lokalizację", Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this,
                     permissions,
                     Request_User_Location_Code);
@@ -150,12 +148,13 @@ public class MapsActivity extends FragmentActivity implements
                     for (int i = 0; i < grantResults.length; i++) {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermission: pozwolenie zabronione");
+                            Toast.makeText(this, "pozwolenie zabronione", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                     }
-                    Log.d(TAG, "onRequestPermission: pozwolenie uzyskane");
+
+                    Toast.makeText(this, "pozwolenie uzyskane", Toast.LENGTH_SHORT).show();
                     mLocationPermissionsGranted = true;
                     initMap();
                 }
@@ -186,17 +185,7 @@ public class MapsActivity extends FragmentActivity implements
         // wyswietlenie markera nowej pozycji. Chociaz w sumie nie wiem po co to, bo niebieski bąbelek i tak sie pojawia. LOL
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-//                markerOptions.title("Moja lokalizacja");
-//                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
-        // dodanie markera do obecnej lokalizacji
-//                currentUserLocationMarker = mMap.addMarker(markerOptions);
-
-        //zmiana kamery zeby byla widoczna lokalizacja, przyblizanie, oddalanie itd
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        //ustawienie przyblizenia kamery na 14
-//                mMap.animateCamera(CameraUpdateFactory.zoomBy(25));
 
         if (googleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
@@ -209,9 +198,7 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         locationRequest = new LocationRequest();
-//        locationRequest.setInterval(1);
-//        locationRequest.setFastestInterval(1);
-//        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 

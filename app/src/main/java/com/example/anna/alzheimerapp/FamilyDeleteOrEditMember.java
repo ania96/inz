@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,8 @@ import java.util.List;
 
 public class FamilyDeleteOrEditMember extends AppCompatActivity implements View.OnClickListener{
     private EditText editTextName, editTextRelationship, editTextSearch;
-    private Button buttonSearch;
+    private Button buttonSearch, buttonDelete;
+    private ImageButton imageButtonDelete;
     ImageView imageView;
     FamilyDbHelper familyDbHelper;
     private MemberAdapterToEdit memberAdapterToEdit;
@@ -67,12 +69,21 @@ public class FamilyDeleteOrEditMember extends AppCompatActivity implements View.
 
 
     public void init() {
+        buttonDelete = (Button)findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(this);
+
 
 
     }
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.buttonDelete:
+                Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show();
+
+                break;
+        }
 
     }
 

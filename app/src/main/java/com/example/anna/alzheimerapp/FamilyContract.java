@@ -12,4 +12,6 @@ public final class FamilyContract {
         public static  final String RELATIONSHIP ="relationship";
 
     }
+
+
 }

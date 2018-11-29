@@ -19,6 +19,8 @@ public class FamilyDbHelper extends SQLiteOpenHelper {
                     + FamilyContract.FamilyEntry.NAME + " TEXT,"
                     + FamilyContract.FamilyEntry.RELATIONSHIP + " TEXT);";
 
+
+
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + FamilyContract.FamilyEntry.TABLE_NAME + ";";
 
     public FamilyDbHelper(Context context) {
